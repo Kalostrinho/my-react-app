@@ -1,5 +1,6 @@
-import { ExpenseList } from './components/expense-list/ExpenseList'
-function App() {
+import { ExpenseList } from './components/expenses/expense-list/ExpenseList'
+
+export const App = () => {
   return (
     <div>
       <header>
@@ -11,5 +12,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
