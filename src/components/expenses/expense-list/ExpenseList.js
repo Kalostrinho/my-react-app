@@ -5,36 +5,49 @@ import { Card } from '../../ui/card/Card'
 import './ExpenseList.css'
 
 export const ExpenseList = (props) => {
-    
-    const [filterYear, setFilterYear] = useState('2019')
+    //--> State for the filter...
+    const [filterYear, setFilterYear] = useState('all')
+    //--> Setting the prop to an expenses const...
     const expenses = [...props.expenseList]
+
+    /**
+     * Handle the event for changing the year filter and
+     * set the proper state to it.
+     * @param {String} newFilter - The new year to set as state for the filter.
+     */
     const handleFilterChange = (newFilter) => {
         setFilterYear(newFilter)
+    }
+
+    //--> Setting a filtered array to feed the list of expenses displayed...
+    const filteredExpenses =
+        filterYear !== 'all'
+            ? expenses.filter((exp) => {
+                  return exp.date.getFullYear().toString() === filterYear
+              })
+            : [...expenses]
+
+    //--> Set conditional content depending on the
+    //--> number of expenses returned by the filter
+    let expensesContent = <div className='norecords'>NO EXPENSES FOUND ON {filterYear}</div>
+    if (filteredExpenses.length > 0) {
+        expensesContent = filteredExpenses.map((exp) => (
+            <ExpenseItem
+                key={exp.id}
+                description={exp.description}
+                price={exp.price}
+                date={exp.date}
+            />
+        ))
     }
     return (
         <div>
             <Card className='expenses'>
-                <ExpensesFilter defaultFilterValue={filterYear} onFilterChange={handleFilterChange}/>
-                <ExpenseItem
-                    description={expenses[0].description}
-                    price={expenses[0].price}
-                    date={expenses[0].date}
+                <ExpensesFilter
+                    defaultFilterValue={filterYear}
+                    onFilterChange={handleFilterChange}
                 />
-                <ExpenseItem
-                    description={expenses[1].description}
-                    price={expenses[1].price}
-                    date={expenses[1].date}
-                />
-                <ExpenseItem
-                    description={expenses[2].description}
-                    price={expenses[2].price}
-                    date={expenses[2].date}
-                />
-                <ExpenseItem
-                    description={expenses[3].description}
-                    price={expenses[3].price}
-                    date={expenses[3].date}
-                />
+                {expensesContent}
             </Card>
         </div>
     )

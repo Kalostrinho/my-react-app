@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 import './ExpenseForm.css'
 
 export const ExpenseForm = (props) => {
-    const [newTitle, setNewTitle] = useState('')
+    const [newDesc, setNewDesc] = useState('')
     const [NewPrice, setNewPrice] = useState('')
     const [newDate, setNewDate] = useState('')
-    const handleTitleChange = (e) => {
-        setNewTitle(e.target.value)
+    const handleDescChange = (e) => {
+        setNewDesc(e.target.value)
     }
     const handlePriceChange = (e) => {
         setNewPrice(e.target.value)
@@ -22,7 +22,7 @@ export const ExpenseForm = (props) => {
 
         //--- Get all form data into an object to be passed around
         const newExpense = {
-            title: newTitle,
+            description: newDesc,
             price: NewPrice,
             date: new Date(newDate),
         }
@@ -31,7 +31,7 @@ export const ExpenseForm = (props) => {
         props.onAddNewExpense(newExpense)
 
         //--- Return components to initial state after "adding"
-        setNewTitle('')
+        setNewDesc('')
         setNewPrice('')
         setNewDate('')
 
@@ -40,11 +40,11 @@ export const ExpenseForm = (props) => {
         <form onSubmit={handleSubmit}>
             <div className='new-expense__controls'>
                 <div className='new-expense__control'>
-                    <label>Title:</label>
-                    <input type='text' value={newTitle} onChange={handleTitleChange} />
+                    <label>New expense description:</label>
+                    <input type='text' value={newDesc} onChange={handleDescChange} />
                 </div>
                 <div className='new-expense__control'>
-                    <label>Price:</label>
+                    <label>New expense price:</label>
                     <input
                         type='number'
                         value={NewPrice}
@@ -54,7 +54,7 @@ export const ExpenseForm = (props) => {
                     />
                 </div>
                 <div className='new-expense__control'>
-                    <label>Date:</label>
+                    <label>New expense date:</label>
                     <input
                         type='date'
                         value={newDate}
@@ -69,7 +69,7 @@ export const ExpenseForm = (props) => {
                     Clear
                 </button>
                 <button type='submit' onClick={handleSubmit}>
-                    Add item
+                    Add expense
                 </button>
             </div>
         </form>

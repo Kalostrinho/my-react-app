@@ -1,14 +1,15 @@
 import { ExpenseList } from './components/expenses/expense-list/ExpenseList'
 import { NewExpenseItem } from './components/add-expense-item/new-expense/NewExpenseItem'
-import { expenses } from './data/dummy-expenses'
+import { expenses as statelessExpenses } from './data/dummy-expenses'
+import { useState } from 'react'
 
 export const App = () => {
 
-  let updatedExpenses = [...expenses]
+  const STATELESS_EXPENSES = [...statelessExpenses]
+  const [expenses, setExpenses] = useState(STATELESS_EXPENSES)
+  
   const handleAddExpense = expense => {
-    updatedExpenses.push(expense)
-    console.log(`--> In APP.js, this is expense: [${JSON.stringify(expense ?? {})}]`)
-    console.log(`--> In APP.js, this is updatedExpenses: [${JSON.stringify(updatedExpenses)}]`)
+    setExpenses(prevExpenses => [...prevExpenses, expense])
   }
 
   return (
@@ -19,7 +20,7 @@ export const App = () => {
         </h1>
       </header>
       <NewExpenseItem onSendNewExpense={handleAddExpense}/>
-      <ExpenseList expenseList={updatedExpenses}/>
+      <ExpenseList expenseList={expenses}/>
     </div>
   );
 }

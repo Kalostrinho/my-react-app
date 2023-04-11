@@ -5,3 +5,11 @@
   width: 50rem;
   max-width: 95%;
 }
+.norecords {
+  font-size: x-large;
+  font-style: italic;
+  color: rgb(216, 59, 2);
+  width: 50rem;
+  max-width: 95%;
+  align-items: center;
+}
