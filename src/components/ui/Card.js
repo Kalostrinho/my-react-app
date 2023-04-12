@@ -1,4 +1,4 @@
-import './Card.css'
+import './css/Card.css'
 
 export const Card = (props) => {
     const classes = `card ${props.className}`

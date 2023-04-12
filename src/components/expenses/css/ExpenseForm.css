@@ -1,0 +1,53 @@
+.new-expense__controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    text-align: left;
+}
+
+.new-expense__control label {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.validation-ok__control label {
+    font-weight: bolder;
+    font-size: x-large;
+    margin-top: 0.2rem;
+    margin-bottom: 0.2rem;
+    display: block;
+    text-align: left;
+    color:rgb(1, 177, 36)
+}
+
+.validation-error__control label {
+    font-weight: bolder;
+    font-size: x-large;
+    margin-top: 0.2rem;
+    margin-bottom: 0.2rem;
+    display: block;
+    text-align: left;
+    color:rgb(200, 45, 45)
+}
+
+.new-expense__control input {
+    font: inherit;
+    padding: 0.5rem;
+    border-radius: 6px;
+    border: 1px solid #2d6ae4;
+    width: 20rem;
+    max-width: 100%;
+}
+
+.new-expense__control input::placeholder {
+    font-weight: lighter;
+    font-style: oblique;
+    opacity: 0.5;
+    color: rgb(101, 128, 179)
+}
+
+.new-expense__actions {
+    text-align: right;
+}

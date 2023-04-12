@@ -1,12 +1,23 @@
 import React, { useState } from 'react'
-import { ExpenseItem } from '../expense-item/ExpenseItem'
-import { ExpensesFilter } from '../../filter-expenses/ExpensesFilter'
-import { Card } from '../../ui/card/Card'
-import './ExpenseList.css'
+import { ExpenseItem } from './ExpenseItem'
+import { ExpensesFilter } from './ExpensesFilter'
+import { Card } from '../ui/Card'
+import './css/ExpenseList.css'
 
+/**
+ * Stateful component "ExpenseList"
+ * - Presents a list of X "ExpenseItems"
+ * - Presents a filtering for "ExpenseItems" based on year (ExpensesFilter)
+ * - Contains logic to hide/show "ExpenseItems" based on filter
+ *     - Uses `conditional content`
+ * @param {Object} props - React props of the component
+ * @returns component's JSX
+ */
 export const ExpenseList = (props) => {
+    
     //--> State for the filter...
     const [filterYear, setFilterYear] = useState('all')
+    
     //--> Setting the prop to an expenses const...
     const expenses = [...props.expenseList]
 
@@ -40,6 +51,10 @@ export const ExpenseList = (props) => {
             />
         ))
     }
+
+    /***************************
+     * FINALLY RETURN COMPONENT
+     ***************************/
     return (
         <div>
             <Card className='expenses'>

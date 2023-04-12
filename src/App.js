@@ -1,17 +1,27 @@
-import { ExpenseList } from './components/expenses/expense-list/ExpenseList'
-import { NewExpenseItem } from './components/add-expense-item/new-expense/NewExpenseItem'
-import { expenses as statelessExpenses } from './data/dummy-expenses'
+import { ExpenseList } from './components/expenses/ExpenseList'
+import { NewExpenseItem } from './components/expenses/NewExpenseItem'
+import { expenses as statelessExpenses } from './data/expenses/dummy-expenses'
 import { useState } from 'react'
 
 export const App = () => {
 
+  //-- Initialize dummy expenses to show something...
   const STATELESS_EXPENSES = [...statelessExpenses]
+
+  //-- Get the initial state for the list of expenses...
   const [expenses, setExpenses] = useState(STATELESS_EXPENSES)
   
+  /**
+   * Present the newly added expense.
+   * @param {Object} expense - The expense added 
+   */
   const handleAddExpense = expense => {
     setExpenses(prevExpenses => [...prevExpenses, expense])
   }
 
+  /***************************
+   * FINALLY RETURN COMPONENT
+   ***************************/
   return (
     <div>
       <header>
