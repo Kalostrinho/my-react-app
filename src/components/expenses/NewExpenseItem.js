@@ -18,7 +18,7 @@ export const NewExpenseItem = (props) => {
     const addNewExpense = (newExpenseData) => {
         const expenseData = {
             ...newExpenseData,
-            id: (Math.floor(Math.random() * 100) + 4).toString()
+            id: (Math.floor(Math.random() * 100) + 4).toString(),
         }
         props.onSendNewExpense(expenseData)
     }

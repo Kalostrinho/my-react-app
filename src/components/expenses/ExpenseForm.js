@@ -9,13 +9,30 @@ import './css/ExpenseForm.css'
  * @returns component's JSX
  */
 export const ExpenseForm = (props) => {
+    /**
+     * Hides the validation messages prompted on screen.
+     * @param {Number} [duration=2000] - Milliseconds that the validation will stay on before hiding.
+     */
+    const hideValidation = (duration = 2000) => {
+        setTimeout(() => {
+            setValidationContent('')
+        }, duration)
+    }
+
+    /**
+     * Toggles the form ON/OFF.
+     */
+    const handleToggle = () => {
+        setVisibleForm((prevState) => !prevState)
+    }
+
     //--> States for each of the data the user provides...
-    const VALIDATION_DURATION = 3000
     const [isValid, setIsValid] = useState('')
     const [validationContent, setValidationContent] = useState('')
     const [newDesc, setNewDesc] = useState('')
     const [newPrice, setNewPrice] = useState('')
     const [newDate, setNewDate] = useState('')
+    const [visibleForm, setVisibleForm] = useState(false)
 
     /**
      * Selects all input content after focus.
@@ -55,10 +72,7 @@ export const ExpenseForm = (props) => {
      */
     const validateRequired = () => {
         let toReturn = true
-        if (newDesc.length > 0 && newPrice.length > 0 && newDate.length > 0) {
-            setIsValid(() => 'validation-ok__control')
-            setValidationContent(<label>NEW EXPENSE ADDED!</label>)
-        } else {
+        if (newDesc.length === 0 || newPrice.length === 0 || newDate.length === 0) {
             setIsValid(() => 'validation-error__control')
             setValidationContent(<label>ALL FIELDS MUST BE SET!</label>)
             toReturn = false
@@ -69,10 +83,8 @@ export const ExpenseForm = (props) => {
             } else {
                 document.getElementById('input-date').focus()
             }
+            hideValidation()
         }
-        setTimeout(() => {
-            setValidationContent('')
-        }, VALIDATION_DURATION)
         return toReturn
     }
 
@@ -87,10 +99,8 @@ export const ExpenseForm = (props) => {
             setValidationContent(<label>PRICE MUST BE GREATER THAN $5!</label>)
             toReturn = false
             document.getElementById('input-price').focus()
+            hideValidation()
         }
-        setTimeout(() => {
-            setValidationContent('')
-        }, VALIDATION_DURATION)
         return toReturn
     }
 
@@ -120,12 +130,45 @@ export const ExpenseForm = (props) => {
             setNewDesc('')
             setNewPrice('')
             setNewDate('')
+
+            //--> Show successful validation and hide...
+            setIsValid(() => 'validation-ok__control')
+            setValidationContent(<label>NEW EXPENSE ADDED!</label>)
+            setTimeout(() => {
+                setValidationContent('')
+                handleToggle()
+            }, 2000)
         }
     }
 
-    /***************************
-     * FINALLY RETURN COMPONENT
-     ***************************/
+    /**
+     * Sets all states back to default and hides the form.
+     * @param {Object} e - Event given
+     */
+    const handleCancel = (e) => {
+        //--> Prevent normal behaviour...
+        e.preventDefault()
+
+        //--> Return components to initial state...
+        setNewDesc('')
+        setNewPrice('')
+        setNewDate('')
+
+        //--> Toggle the add new expense form...
+        handleToggle()
+    }
+
+    /**********************************************
+     * FINALLY RETURN COMPONENT... CONDITIONALLY?
+     *********************************************/
+
+    if (!visibleForm) {
+        return (
+            <button id='button-wanna-add-new-expense' onClick={handleToggle}>
+                Wanna add a new expense?
+            </button>
+        )
+    }
     return (
         <div>
             <form onSubmit={handleSubmit}>
@@ -133,7 +176,7 @@ export const ExpenseForm = (props) => {
                     <div className='new-expense__control'>
                         <label>Description:</label>
                         <input
-                            id='input-desc'
+                            id='input-description'
                             placeholder='Set new expense description...'
                             type='text'
                             value={newDesc}
@@ -167,15 +210,17 @@ export const ExpenseForm = (props) => {
                     </div>
                 </div>
                 <div className='new-expense__actions'>
-                    <button className='alternative' type='reset'>
-                        Clear
+                    <button id='button-cancel' className='alternative' onClick={handleCancel}>
+                        Cancel
                     </button>
-                    <button type='submit' onClick={handleSubmit}>
+                    <button id='button-add-expense' type='submit' onClick={handleSubmit}>
                         Add expense
                     </button>
                 </div>
             </form>
-            <div className={isValid}>{validationContent}</div>
+            <div id='message-validation' className={isValid}>
+                {validationContent}
+            </div>
         </div>
     )
 }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { ExpenseItem } from './ExpenseItem'
 import { ExpensesFilter } from './ExpensesFilter'
+import { ConditionalExpenses } from './ConditionalExpenses'
 import { Card } from '../ui/Card'
 import './css/ExpenseList.css'
 
@@ -14,10 +14,9 @@ import './css/ExpenseList.css'
  * @returns component's JSX
  */
 export const ExpenseList = (props) => {
-    
     //--> State for the filter...
     const [filterYear, setFilterYear] = useState('all')
-    
+
     //--> Setting the prop to an expenses const...
     const expenses = [...props.expenseList]
 
@@ -38,20 +37,6 @@ export const ExpenseList = (props) => {
               })
             : [...expenses]
 
-    //--> Set conditional content depending on the
-    //--> number of expenses returned by the filter
-    let expensesContent = <div className='norecords'>NO EXPENSES FOUND ON {filterYear}</div>
-    if (filteredExpenses.length > 0) {
-        expensesContent = filteredExpenses.map((exp) => (
-            <ExpenseItem
-                key={exp.id}
-                description={exp.description}
-                price={exp.price}
-                date={exp.date}
-            />
-        ))
-    }
-
     /***************************
      * FINALLY RETURN COMPONENT
      ***************************/
@@ -62,7 +47,7 @@ export const ExpenseList = (props) => {
                     defaultFilterValue={filterYear}
                     onFilterChange={handleFilterChange}
                 />
-                {expensesContent}
+                <ConditionalExpenses expenses={filteredExpenses} yearFilter={filterYear} />
             </Card>
         </div>
     )
